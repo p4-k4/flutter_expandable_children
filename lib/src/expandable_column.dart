@@ -9,8 +9,8 @@ class ExpandableRow {}
 /// Work in progress
 class ExpandableListView {}
 
-class ExpandableColumnEvent {
-  ExpandableColumnEvent({
+class ExpandableChildEvent {
+  ExpandableChildEvent({
     required this.contentContainerId,
     this.expansionIndex,
   });
@@ -18,12 +18,12 @@ class ExpandableColumnEvent {
   final int? expansionIndex;
 }
 
-class ExpandableColumnController {
-  final _controller = StreamController<ExpandableColumnEvent>.broadcast();
-  Stream<ExpandableColumnEvent> get stream => _controller.stream;
+class ExpandableChildController {
+  final _controller = StreamController<ExpandableChildEvent>.broadcast();
+  Stream<ExpandableChildEvent> get stream => _controller.stream;
   expansionToggle(int? contentCotnainerId, int index) {
     if (contentCotnainerId == null) return;
-    _controller.add(ExpandableColumnEvent(
+    _controller.add(ExpandableChildEvent(
         contentContainerId: contentCotnainerId, expansionIndex: index));
   }
 }
@@ -67,7 +67,7 @@ class ExpandableColumn extends StatefulWidget {
   final int? id;
 
   /// The `ExpandableColumnController` that this `ExpandableColumn` will listen to.
-  final ExpandableColumnController? controller;
+  final ExpandableChildController? controller;
 
   /// A list of indexes that correspond to the children of this `ExpandableColumn`.
   /// Each child for the given index will be automatically expanded once this widget
@@ -145,7 +145,7 @@ class ColumnChildExpander extends StatefulWidget {
   }) : super(key: key);
   final int index;
   final int? contentCotnainerId;
-  final ExpandableColumnController? controller;
+  final ExpandableChildController? controller;
   final Widget child;
   final int duration;
   final Curve curve;
